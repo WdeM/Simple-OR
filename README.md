@@ -1,6 +1,6 @@
 # Check Open Redirects
 
-Simple testing for open redirection with 48 lines of python and a wordlist.
+Simple testing for open redirection with a small python script and a wordlist.
 
 # Requirements
 * tld
