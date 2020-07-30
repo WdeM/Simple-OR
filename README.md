@@ -12,3 +12,7 @@ Install requirements
 
 # Usage
 ```python3 openredirect.py [url] [wordlist] ```
+
+# Notes
+Still a bit slow, one could add threading to the mix if one 
+can find the time and motivation to do so.
