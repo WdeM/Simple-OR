@@ -8,7 +8,7 @@ Simple testing for open redirection with 48 lines of python and a wordlist.
 * progressbar2
 
 Install requirements
-```pip3 install -r requirements.txt``` or install them manually
+```pip3 install -r requirements.txt``` or install them manually.
 
 # Usage
 ```python3 openredirect.py [url] [wordlist] ```
