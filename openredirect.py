@@ -4,15 +4,16 @@ import requests
 import progressbar
 from tld import get_tld
 
+
 def request(url):
     try:
         response = requests.get(url, verify=False, allow_redirects=False, 
-                timeout=3, retries=10)
+                timeout=3)
         return response
-    except requests.ConnectionError, e:
-        print("There has been 10 failed connection attempts.\n")
+    except requests.exceptions.RequestException as e:
         print(e)
-        exit(1)
+        print("\nSomething went wrong, please check your url and connection\n")
+        raise SystemExit()
 
 def read_wordlist(wordlist):
     _list = []
@@ -30,8 +31,11 @@ if __name__ == "__main__":
         wordlist_given = sys.argv[2]
     except Exception as e:
         print("\n### Syntax being openredirect.py [url] [wordlist] \n")
+        print("### Example : python3 openredirect.py https://google.com/ wordlist.txt")
         exit(0)
 
+    # Global configurations
+    requests.adapters.DEFAULT_RETRIES = 10
     requests.packages.urllib3.disable_warnings()
 
     redirecting_status_codes = [301,302,303,304]
@@ -51,3 +55,4 @@ if __name__ == "__main__":
                         print("Queried url :")
                         print(url_given+payload)
         bar.update(index)
+
