@@ -6,10 +6,13 @@ from tld import get_tld
 
 def request(url):
     try:
-        response = requests.get(url, verify=False, allow_redirects=False, timeout=3)
+        response = requests.get(url, verify=False, allow_redirects=False, 
+                timeout=3, retries=10)
         return response
-    except Exception as e:
+    except requests.ConnectionError, e:
+        print("There has been 10 failed connection attempts.\n")
         print(e)
+        exit(1)
 
 def read_wordlist(wordlist):
     _list = []
