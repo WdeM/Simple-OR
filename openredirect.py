@@ -29,19 +29,22 @@ if __name__ == "__main__":
         print("\n### Syntax being openredirect.py [url] [wordlist] \n")
         exit(0)
 
+    requests.packages.urllib3.disable_warnings()
+
     redirecting_status_codes = [301,302,303,304]
     payloads = read_wordlist(wordlist_given)
     bar = progressbar.ProgressBar(max_value=len(payloads))
     for index, payload in enumerate(payloads):
         response = request(url_given+payload)
-        if response.status_code in redirecting_status_codes:
-            if "Location" in response.headers:
-                queried_url = get_tld(url_given, as_object=True)
-                old_domain = queried_url.domain+"."+queried_url.tld
-                if old_domain not in response.headers["Location"]:
-                    print("### Found something ###")
-                    print("Location header : ")
-                    print(response.headers["Location"])
-                    print("Queried url :")
-                    print(url_given+payload)
+        if hasattr(response, "status_code"):
+            if response.status_code in redirecting_status_codes:
+                if "Location" in response.headers:
+                    queried_url = get_tld(url_given, as_object=True)
+                    old_domain = queried_url.domain+"."+queried_url.tld
+                    if old_domain not in response.headers["Location"]:
+                        print("### Found something ###")
+                        print("Location header : ")
+                        print(response.headers["Location"])
+                        print("Queried url :")
+                        print(url_given+payload)
         bar.update(index)
