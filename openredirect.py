@@ -16,13 +16,9 @@ def request(url):
         raise SystemExit()
 
 def read_wordlist(wordlist):
-    _list = []
-    f = open(wordlist)
-    for payload in f.readlines():
-        payload = payload.replace("\n", "")
-        if payload not in _list:
-            _list.append(payload)
-    return _list
+    with open(wordlist) as f:
+        payloads = f.read().splitlines()
+    return payloads
 
 
 if __name__ == "__main__":
